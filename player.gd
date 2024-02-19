@@ -39,13 +39,19 @@ func change_state(new_state):
 			$AnimationPlayer.play("jump_up")
 		HURT:
 			$AnimationPlayer.play("hurt")
-			velocity.y = 200
+			velocity.y = -200
 			velocity.x = -100 * sign(velocity.x)
+			life -= 1
+			await get_tree().create_timer(0.5).timeout
+			change_state(IDLE)
 		DEAD:
+			died.emit()
 			hide()
 
 
 func get_input():
+	if state == HURT: return
+	
 	var right = Input.is_action_pressed("right")
 	var left = Input.is_action_pressed("left")
 	var jump = Input.is_action_just_pressed("jump")
