@@ -1,6 +1,7 @@
-[gd_scene load_steps=6 format=3 uid="uid://dk7pe1iqq7eqy"]
+[gd_scene load_steps=7 format=3 uid="uid://dk7pe1iqq7eqy"]
 
 [ext_resource type="Texture2D" uid="uid://cdq4csla0r7sa" path="res://assets/sprites/cherry.png" id="1_7cgic"]
+[ext_resource type="Script" path="res://item.gd" id="1_mjo5v"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_8mpc5"]
 radius = 11.0454
@@ -47,6 +48,7 @@ _data = {
 [node name="Item" type="Area2D"]
 collision_layer = 8
 collision_mask = 2
+script = ExtResource("1_mjo5v")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("1_7cgic")
@@ -62,3 +64,5 @@ libraries = {
 "": SubResource("AnimationLibrary_stpba")
 }
 autoplay = "cherry"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
