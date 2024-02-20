@@ -30,6 +30,7 @@ func _ready():
 	$Items.hide()
 	$Player.reset($SpawnPoint.position)
 	set_camera_limits()
+	spawn_items()
 	
 
 func set_camera_limits():
