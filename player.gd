@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal life_changed
 signal died
 
-var life = 3: set = set_life
+var life = 100: set = set_life # again virtually impossible to die
 
 @export var gravity = 750
 @export var run_speed = 150
@@ -85,10 +85,16 @@ func _physics_process(delta):
 		change_state(IDLE)
 	if state == JUMP and velocity.y > 0:
 		$AnimationPlayer.play("jump_down")
-		
-		
+	if state == HURT:
+		return
+	for i in get_slide_collision_count():
+		var collision = get_slide_collision(i)
+		if collision.get_collider().is_in_group("obstacles"):
+			hurt()
+
+
 func reset(_position):
 	position = _position
 	show()
 	change_state(IDLE)
-	life = 3
+	life = 100 # virtually impossible to die

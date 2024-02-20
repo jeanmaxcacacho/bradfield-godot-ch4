@@ -1,0 +1,26 @@
+[gd_scene load_steps=6 format=3 uid="uid://ddww0irygp0ro"]
+
+[ext_resource type="Script" path="res://level_base.gd" id="1_hma11"]
+[ext_resource type="TileSet" uid="uid://dn505hopwb4de" path="res://assets/tilesets/tiles_items.tres" id="1_s2mpm"]
+[ext_resource type="TileSet" uid="uid://dhxw3f8l2saqn" path="res://assets/tilesets/tiles_world.tres" id="2_8vaev"]
+[ext_resource type="TileSet" uid="uid://blhd0ogpuydej" path="res://assets/tilesets/tiles_spikes.tres" id="2_xwlbd"]
+[ext_resource type="PackedScene" uid="uid://d0cxjo7x1wevd" path="res://player.tscn" id="3_pvjiy"]
+
+[node name="LevelBase" type="Node2D"]
+script = ExtResource("1_hma11")
+
+[node name="World" type="TileMap" parent="."]
+tile_set = ExtResource("2_8vaev")
+format = 2
+
+[node name="Items" type="TileMap" parent="."]
+tile_set = ExtResource("1_s2mpm")
+format = 2
+
+[node name="Obstacles" type="TileMap" parent="." groups=["obstacles"]]
+tile_set = ExtResource("2_xwlbd")
+format = 2
+
+[node name="Player" parent="." instance=ExtResource("3_pvjiy")]
+
+[node name="SpawnPoint" type="Marker2D" parent="."]
