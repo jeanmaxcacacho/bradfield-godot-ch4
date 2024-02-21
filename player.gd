@@ -91,6 +91,12 @@ func _physics_process(delta):
 		var collision = get_slide_collision(i)
 		if collision.get_collider().is_in_group("obstacles"):
 			hurt()
+		if collision.get_collider().is_in_group("enemies"):
+			if position.y + 5 < collision.get_collider().position.y:
+				collision.get_collider().take_damage()
+				velocity.y = -200
+			else:
+				hurt()
 
 
 func reset(_position):
