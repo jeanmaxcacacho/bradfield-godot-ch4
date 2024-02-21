@@ -31,7 +31,9 @@ func _ready():
 	$Player.reset($SpawnPoint.position)
 	set_camera_limits()
 	spawn_items()
-	
+	$Player.life_changed.connect($CanvasLayer/HUD.update_life)
+	score_changed.connect($CanvasLayer/HUD.update_score)
+
 
 func set_camera_limits():
 	var map_size = $World.get_used_rect()
