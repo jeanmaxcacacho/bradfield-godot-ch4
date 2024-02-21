@@ -87,6 +87,8 @@ func _physics_process(delta):
 		$AnimationPlayer.play("jump_down")
 	if state == HURT:
 		return
+	if state == DEAD:
+		return
 	for i in get_slide_collision_count():
 		var collision = get_slide_collision(i)
 		if collision.get_collider().is_in_group("obstacles"):
@@ -97,6 +99,8 @@ func _physics_process(delta):
 				velocity.y = -200
 			else:
 				hurt()
+	if position.y > 1000:
+		change_state(DEAD)
 
 
 func reset(_position):
