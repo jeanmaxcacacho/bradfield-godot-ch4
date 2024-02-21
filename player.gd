@@ -9,7 +9,7 @@ var life = 8: set = set_life # again virtually impossible to die
 @export var run_speed = 150
 @export var jump_speed = -300
 
-enum {IDLE, RUN, JUMP, HURT, DEAD}
+enum {IDLE, RUN, JUMP, HURT, DEAD, CLIMB}
 var state = IDLE
 
 func _ready():
