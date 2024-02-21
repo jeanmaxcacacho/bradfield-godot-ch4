@@ -8,9 +8,11 @@ var life = 8: set = set_life # again virtually impossible to die
 @export var gravity = 750
 @export var run_speed = 150
 @export var jump_speed = -300
+@export var climb_speed = 50
 
 enum {IDLE, RUN, JUMP, HURT, DEAD, CLIMB}
 var state = IDLE
+var is_on_ladder = false
 
 func _ready():
 	change_state(IDLE)
@@ -47,6 +49,8 @@ func change_state(new_state):
 		DEAD:
 			died.emit()
 			hide()
+		CLIMB:
+			$AnimationPlayer.play("climb")
 
 
 func get_input():
@@ -55,6 +59,8 @@ func get_input():
 	var right = Input.is_action_pressed("right")
 	var left = Input.is_action_pressed("left")
 	var jump = Input.is_action_just_pressed("jump")
+	var up = Input.is_action_pressed("climb")
+	var down = Input.is_action_pressed("crouch")
 	
 	velocity.x = 0
 	if right:
@@ -74,6 +80,20 @@ func get_input():
 		change_state(IDLE)
 	if state in [IDLE, RUN] and !is_on_floor():
 		change_state(JUMP)
+	if up and state != CLIMB and is_on_ladder:
+		change_state(CLIMB)
+	if state == CLIMB:
+		if up:
+			velocity.y = -climb_speed
+			$AnimationPlayer.play("climb")
+		elif down:
+			velocity.y = climb_speed
+			$AnimationPlayer.play("climb")
+		else:
+			velocity.y = 0
+			$AnimationPlayer.stop()
+	if state == CLIMB and not is_on_ladder:
+		change_state(IDLE)
 
 
 func _physics_process(delta):
@@ -101,6 +121,8 @@ func _physics_process(delta):
 				hurt()
 	if position.y > 1000:
 		change_state(DEAD)
+	if state != CLIMB:
+		velocity.y += (gravity*.75) * delta
 
 
 func reset(_position):

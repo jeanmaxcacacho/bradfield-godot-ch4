@@ -33,6 +33,7 @@ func _ready():
 	spawn_items()
 	$Player.life_changed.connect($CanvasLayer/HUD.update_life)
 	score_changed.connect($CanvasLayer/HUD.update_score)
+	create_ladders()
 
 
 func set_camera_limits():
@@ -40,3 +41,24 @@ func set_camera_limits():
 	var cell_size = $World.tile_set.tile_size
 	$Player/Camera2D.limit_left = (map_size.position.x-5) * cell_size.x
 	$Player/Camera2D.limit_right = (map_size.end.x+5) * cell_size.x
+
+
+func _on_ladder_body_entered(body):
+	body.is_on_ladder = true
+
+
+func _on_ladder_body_exited(body):
+	body.is_on_ladder = false
+	
+	
+func create_ladders():
+	var cells = $World.get_used_cells(0)
+	for cell in cells:
+		var data = $World.get_cell_tile_data(0, cell)
+		if data.get_custom_data("special") == "ladder":
+			var c = CollisionShape2D.new()
+			$Ladder.add_child(c)
+			c.position = $World.map_to_local(cell)
+			var s = RectangleShape2D.new()
+			s.size = Vector2(5, 16)
+			c.shape = s

@@ -30,5 +30,11 @@ format = 2
 
 [node name="HUD" parent="CanvasLayer" instance=ExtResource("6_770h5")]
 
+[node name="Ladder" type="Area2D" parent="."]
+collision_layer = 8
+collision_mask = 2
+
 [connection signal="score_changed" from="." to="CanvasLayer/HUD" method="_on_level_base_score_changed"]
 [connection signal="life_changed" from="Player" to="CanvasLayer/HUD" method="_on_player_life_changed"]
+[connection signal="body_entered" from="Ladder" to="." method="_on_ladder_body_entered"]
+[connection signal="body_exited" from="Ladder" to="." method="_on_ladder_body_exited"]
