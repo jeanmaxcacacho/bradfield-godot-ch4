@@ -3,7 +3,7 @@ extends CharacterBody2D
 signal life_changed
 signal died
 
-var life = 100: set = set_life # again virtually impossible to die
+var life = 8: set = set_life # again virtually impossible to die
 
 @export var gravity = 750
 @export var run_speed = 150
@@ -107,4 +107,4 @@ func reset(_position):
 	position = _position
 	show()
 	change_state(IDLE)
-	life = 100 # virtually impossible to die
+	life = 8 # you can die only if you fell off or really tried to die
